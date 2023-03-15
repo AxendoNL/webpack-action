@@ -35,7 +35,7 @@ runs:
       with:
         node-version: '16'
         cache: 'npm'
-         cache-dependency-path: ${{ inputs.directory/npm-shrinkwrap.json }}
+         cache-dependency-path: "${{ inputs.directory }}\\npm-shrinkwrap.json"
   
     - name: NPM install
       if: steps.CACHE_WEBPACK.outputs.cache-hit != 'true'
