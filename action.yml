@@ -31,9 +31,12 @@ runs:
     ### below if will make sure this only runs when webpacks needs to be build 
     - name: Set the cache file name in env
       id: CACHE_FILE_NAME
-      run: echo "cachefile=package-lock.json" >> $env:GITHUB_OUTPUT
+      run: |
+        if(Test-Path -Path 'package-lock.json'){ echo "cachefile=package-lock.json" >> $env:GITHUB_OUTPUT }
+        else if(Test-Path 'npm-shrinkwrap.json'){ echo "cachefile=npm-shrinkwrap.json" >> $env:GITHUB_OUTPUT }
       working-directory: ${{ inputs.directory }}
       shell: powershell
+      
     - name: Setup node 
       if: steps.CACHE_WEBPACK.outputs.cache-hit != 'true'
       uses: actions/setup-node@v3
