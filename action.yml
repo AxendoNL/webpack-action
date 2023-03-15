@@ -30,7 +30,8 @@ runs:
     
     ### below if will make sure this only runs when webpacks needs to be build 
     - name: Set the cache file name in env
-      run: echo "cachefile=package-lock.json" >> $GITHUB_ENV
+      id: CACHE_FILE_NAME
+      run: echo "cachefile=package-lock.json" >> $env:GITHUB_OUTPUT
       working-directory: ${{ inputs.directory }}
       shell: powershell
     - name: Setup node 
@@ -39,7 +40,7 @@ runs:
       with:
         node-version: '16'
         cache: 'npm'
-        cache-dependency-path: "${{ inputs.directory }}\\$cachefile"
+        cache-dependency-path: "${{ inputs.directory }}\\${{steps.CACHE_FILE_NAME.outputs.cachefile}}"
   
     - name: NPM install
       if: steps.CACHE_WEBPACK.outputs.cache-hit != 'true'
