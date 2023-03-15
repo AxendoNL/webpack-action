@@ -29,8 +29,10 @@ runs:
         key: webpack-cache-${{steps.WEBPACK_HASH.outputs.hash}}
     
     ### below if will make sure this only runs when webpacks needs to be build 
-    - uses: actions/setup-node@v3
+    - name: Setup node 
       if: steps.CACHE_WEBPACK.outputs.cache-hit != 'true'
+      uses: actions/setup-node@v3
+      working-directory: ${{ inputs.directory }}
       with:
         node-version: '16'
         cache: 'npm'
