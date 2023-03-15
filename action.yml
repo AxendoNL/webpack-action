@@ -31,8 +31,9 @@ runs:
     ### below if will make sure this only runs when webpacks needs to be build 
     - name: Setup node 
       if: steps.CACHE_WEBPACK.outputs.cache-hit != 'true'
-      uses: actions/setup-node@v3
-      working-directory: ${{ inputs.directory }}
+      run: cd ${{ inputs.directory }}
+      shell: powershell
+    - uses: actions/setup-node@v3
       with:
         node-version: '16'
         cache: 'npm'
