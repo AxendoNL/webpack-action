@@ -23,7 +23,7 @@ runs:
     ### Check cache action for existing webpack build
     - name: Cache Webpack Build
       id: CACHE_WEBPACK
-      uses: actions/cache@v3.2.2
+      uses: actions/cache@v4.0.2
       with:
         path: "${{ inputs.output-folder }}"
         key: webpack-cache-${{inputs.directory}}-${{steps.WEBPACK_HASH.outputs.hash}}
