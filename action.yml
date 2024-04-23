@@ -11,9 +11,9 @@ runs:
   using: "composite"
   steps:
     ### Get latest git commit with changes to the project
-    - id: WEBPACK_HASH
-      run: echo "hash=$(git log -1 --pretty=format:'%h' --follow '${{ inputs.directory }}')" >> $env:GITHUB_OUTPUT # AXDEVOPS-16: replacement for set-output   
-      shell: powershell
+    # - id: WEBPACK_HASH
+    #   run: echo "hash=$(git log -1 --pretty=format:'%h' --follow '${{ inputs.directory }}')" >> $env:GITHUB_OUTPUT # AXDEVOPS-16: replacement for set-output   
+    #   shell: powershell
     
     ### First make sure the output directory exists, this is needed or cache action will throw an error
     - name: Create Directory.
@@ -21,12 +21,12 @@ runs:
       shell: powershell
         
     ### Check cache action for existing webpack build
-    - name: Cache Webpack Build
-      id: CACHE_WEBPACK
-      uses: actions/cache@v4.0.2
-      with:
-        path: "${{ inputs.output-folder }}"
-        key: webpack-cache-${{inputs.directory}}-${{steps.WEBPACK_HASH.outputs.hash}}
+    # - name: Cache Webpack Build
+    #   id: CACHE_WEBPACK
+    #   uses: actions/cache@v4.0.2
+    #   with:
+    #     path: "${{ inputs.output-folder }}"
+    #     key: webpack-cache-${{inputs.directory}}-${{steps.WEBPACK_HASH.outputs.hash}}
     
     ### below if will make sure this only runs when webpacks needs to be build 
     - name: Set the cache file name in env
@@ -39,20 +39,20 @@ runs:
       shell: powershell
 
     - name: Setup node 
-      if: steps.CACHE_WEBPACK.outputs.cache-hit != 'true'
+      #if: steps.CACHE_WEBPACK.outputs.cache-hit != 'true'
       uses: actions/setup-node@v4.0.2
       with:
         node-version: '20'
-        cache: 'npm'
-        cache-dependency-path: "${{ inputs.directory }}\\${{steps.CACHE_FILE_NAME.outputs.cachefile}}"
+        #cache: 'npm'
+        #cache-dependency-path: "${{ inputs.directory }}\\${{steps.CACHE_FILE_NAME.outputs.cachefile}}"
   
     - name: NPM install
-      if: steps.CACHE_WEBPACK.outputs.cache-hit != 'true'
+      #if: steps.CACHE_WEBPACK.outputs.cache-hit != 'true'
       run: npm install
       working-directory: ${{ inputs.directory }}
       shell: powershell
     - name: Run webpack
-      if: steps.CACHE_WEBPACK.outputs.cache-hit != 'true'
+      #if: steps.CACHE_WEBPACK.outputs.cache-hit != 'true'
       run: npm run build:production
       working-directory: ${{ inputs.directory }}
       shell: powershell
