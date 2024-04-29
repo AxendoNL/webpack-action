@@ -40,9 +40,9 @@ runs:
 
     - name: Setup node 
       #if: steps.CACHE_WEBPACK.outputs.cache-hit != 'true'
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v3.6.0
       with:
-        node-version: '18'
+        node-version: '16'
         #cache: 'npm'
         #cache-dependency-path: "${{ inputs.directory }}\\${{steps.CACHE_FILE_NAME.outputs.cachefile}}"
   
