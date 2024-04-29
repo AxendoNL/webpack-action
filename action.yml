@@ -16,9 +16,9 @@ runs:
     #   shell: powershell
     
     ### First make sure the output directory exists, this is needed or cache action will throw an error
-    - name: Create Directory.
-      run: New-Item -Path "${{ inputs.output-folder }}" -ItemType "directory" -Force
-      shell: powershell
+    # - name: Create Directory.
+    #   run: New-Item -Path "${{ inputs.output-folder }}" -ItemType "directory" -Force
+    #   shell: powershell
         
     ### Check cache action for existing webpack build
     # - name: Cache Webpack Build
