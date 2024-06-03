@@ -7,6 +7,10 @@ inputs:
   output-folder:
     description: 'Webpack output path'
     required: true
+  node-version:
+    description: 'version of node.js to load, is set at organization or repository level with FRONTEND_NODE_VERSION and VUE_NODE_VERSION variables'
+    required: false
+    default: '16'
 runs:
   using: "composite"
   steps:
@@ -42,7 +46,7 @@ runs:
       if: steps.CACHE_WEBPACK.outputs.cache-hit != 'true'
       uses: actions/setup-node@v3.6.0
       with:
-        node-version: '16'
+        node-version: '${{ inputs.node-version }}'
         cache: 'npm'
         cache-dependency-path: "${{ inputs.directory }}\\${{steps.CACHE_FILE_NAME.outputs.cachefile}}"
   
@@ -51,6 +55,7 @@ runs:
       run: npm ci
       working-directory: ${{ inputs.directory }}
       shell: powershell
+      
     - name: Run webpack
       if: steps.CACHE_WEBPACK.outputs.cache-hit != 'true'
       run: npm run build:production
