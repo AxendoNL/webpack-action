@@ -47,8 +47,8 @@ runs:
       uses: actions/setup-node@v4
       with:
         node-version: '${{ inputs.node-version }}'
-        cache: 'npm'
-        cache-dependency-path: "${{ inputs.directory }}\\${{steps.CACHE_FILE_NAME.outputs.cachefile}}"
+#        cache: 'npm'
+#        cache-dependency-path: "${{ inputs.directory }}\\${{steps.CACHE_FILE_NAME.outputs.cachefile}}"
   
     - name: NPM install
       if: steps.CACHE_WEBPACK.outputs.cache-hit != 'true'
